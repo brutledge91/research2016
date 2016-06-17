@@ -2,7 +2,7 @@
 #include <random>
 #include "constants.h"
 
-bool move = false;
+
 
 int Dynamic_Obstacle::TransferFunction()
 {
@@ -44,119 +44,151 @@ int Dynamic_Obstacle::ProcessStep()
     }
     return 0;
 }
-int Dynamic_Obstacle::move_()
-{
-    FindObs();
-
-    double degree;
- //    if (ObstacleCoordinates.y() >= 11)
- //   {
- //       degree = 0;
- //   }
-    double x_ = qCos(qDegreesToRadians(degree));
-    double y_ = qSin(qDegreesToRadians(degree));
+int Dynamic_Obstacle::move_(){
+//    FindObs();
+//    bool move = false;
+// //  double degree;
+// //    if (ObstacleCoordinates.y() >= 11)
+// //   {
+// //       degree = 0;
+// //   }
+//   // double x_ = qCos(qDegreesToRadians(degree));
+//   // double y_ = qSin(qDegreesToRadians(degree));
 
     QPointF newObstacleCoordinate;
-    newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
-    newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
+//    //newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
+//   // newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
 
-    // ///////////////////////////////////////////////////////////////////////
+//    // //////////////////////////////////////////////////////////////////////
 
-    if(move == false){
-    while(true){
-        int min = 0;
-        int max = matrix_size;
-        std::random_device seed;
-        std::mt19937 generator(seed());
-        std::uniform_int_distribution<int> dist(min, max);
-        int init_mov = dist(generator);
+//    const int a = 0;//left
+//    const int b = 1;//right
+//    const int c = 2;//forward
+//    const int d = 3;//backward
+//    int init_mov;
+//    if(move == false){
+//    while(true){
+//        int min = 0;
+//        int max = matrix_size;
+//        std::random_device seed;
+//        std::mt19937 generator(seed());
+//        std::uniform_int_distribution<int> dist(min, max);
+//        int init_mov = dist(generator);
 
-        const int a = 0;//left
-        const int b = 1;//right
-        const int c = 2;//forward
-        const int d = 3;//backward
-      //constexpr int e = 4;//no movement
+//      //constexpr int e = 4;//no movement
 
-        switch(init_mov){
-            case a:
-                newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
-                newObstacleCoordinate.setY(ObstacleCoordinates.y());
-                break;
-            case b:
-                newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
-                newObstacleCoordinate.setY(ObstacleCoordinates.y());
-                break;
-            case c:
-                newObstacleCoordinate.setX(ObstacleCoordinates.x());
-                newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
-                break;
-            case d:
-                newObstacleCoordinate.setX(ObstacleCoordinates.x());
-                newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
-                break;
-            default:
-                newObstacleCoordinate.setX(ObstacleCoordinates.x());
-                newObstacleCoordinate.setY(ObstacleCoordinates.y());
-            }
-        int tempx = newObstacleCoordinate.x();
-        int tempy = newObstacleCoordinate.y();
+//        switch(init_mov){
+//            case a:
+//                newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
+//                newObstacleCoordinate.setY(ObstacleCoordinates.y());
+//                break;
+//            case b:
+//                newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
+//                newObstacleCoordinate.setY(ObstacleCoordinates.y());
+//                break;
+//            case c:
+//                newObstacleCoordinate.setX(ObstacleCoordinates.x());
+//                newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
+//                break;
+//            case d:
+//                newObstacleCoordinate.setX(ObstacleCoordinates.x());
+//                newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
+//                break;
+//            default:
+//                newObstacleCoordinate.setX(ObstacleCoordinates.x());
+//                newObstacleCoordinate.setY(ObstacleCoordinates.y());
+//            }
+//        int tempx = newObstacleCoordinate.x();
+//        int tempy = newObstacleCoordinate.y();
 
-        if(tempx < 0 || tempy < 0 || tempy > Environment->size() || tempx > Environment->at(tempy).size() ){
-            continue;
-            }
-        else if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
-            continue;
-            }
-        else{
-            move = true;
-            break;
-            }
+//        if(tempx < 0 || tempy < 0 || tempy > Environment->size() || tempx > Environment->at(tempy).size() ){
+//            continue;
+//            }
+//        else if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
+//            continue;
+//            }
+//        else{
+//            move = true;
+//            //number = &init_mov;
+//            break;
+//            }
 
-        }
-        }
+//        }
+//        }
 
-    else{
-        bool break = false;
-        QVector<int> val;
-        QList<float> p;
-        QList<float> s;
-          const int x = 1;
-        for(int i=0; i <= matrix_size - 1; i++){
-            p.append(Mov(obs,i));
-            }
+//    else{
 
-        s = p;
-        qSort(s.begin(), s.end(),qGreater<qreal>());
+//        QVector<int> val;
+//        QList<float> p;
+//        QList<float> s;
+//        //const int x = 1;
+//        int in;
+//        for(int i=0; i <= matrix_size - 1; i++){
+//            p.append(OMov(init_mov,i)); //modify to update init_mov to previous move
+//            }
 
-        for(int j=0; j<= matrix_size - 1; j++){
-            bool move = false;
-            float max = s.at(j);
-            int count = s.count(max);
-            if(count > 1){
-                for(int l =1; l <= count; l++){
-                    //val = p.indexOf(max,l);
-                    //if(no walls){
-                    //  move = true;
-                    //  break;
-                    //  }
-                    }
-                }
-            else{
-                    //val = p.indexOf(max);
-                    //if(no walls){
-                    //  move = true;
-                    //  }
-                    }
+//        s = p;
+//        qSort(s.begin(), s.end(),qGreater<qreal>());
+//        bool x_move;
+//        for(int j=0; j<= matrix_size - 1; j++){
 
-            if(move == true){
-                break;
-                }
-            }
+//            float max = s.at(j);
+//            int count = p.count(max);
+////            for (int c = count; c > 0; c--){
+//                for(int l =1; l <= count; l++){
+//                    in = p.indexOf(max,l);
 
-        return val;
+//                    switch(in){
+//                        case a:
+//                            newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
+//                            newObstacleCoordinate.setY(ObstacleCoordinates.y());
+//                            break;
+//                        case b:
+//                            newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
+//                            newObstacleCoordinate.setY(ObstacleCoordinates.y());
+//                            break;
+//                        case c:
+//                            newObstacleCoordinate.setX(ObstacleCoordinates.x());
+//                            newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
+//                            break;
+//                        case d:
+//                            newObstacleCoordinate.setX(ObstacleCoordinates.x());
+//                            newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
+//                            break;
+//                        default:
+//                            newObstacleCoordinate.setX(ObstacleCoordinates.x());
+//                            newObstacleCoordinate.setY(ObstacleCoordinates.y());
+//                        }
+
+//                    double tempx =  newObstacleCoordinate.x();
+//                    double tempy =  newObstacleCoordinate.y();
+
+//                  //  if(tempx < 0 || tempy < 0 || tempy > Environment->size() || tempx > Environment->at(tempy).size() ){
+//                  //      continue;
+//                   //     }
+//                   // else
+//                        if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
+//                        continue;
+//                        }
+//                    else{
+//                        x_move = true;
+//                        break;
+//                        }
+//                     }
 
 
-    }
+
+//                    if(x_move == true){
+//                        break;
+//                    }
+
+
+//                   }
+
+    double xx = -5;
+    double yy = 5;
+    newObstacleCoordinate.setX(ObstacleCoordinates.x() +xx);
+    newObstacleCoordinate.setY(ObstacleCoordinates.y() +yy);
 
 
     // ///////////////////////////////////////////////////////////////////////
@@ -168,14 +200,12 @@ int Dynamic_Obstacle::move_()
 
 
     //if (qAbs(ObstacleCoordinates.x() - 11) < 3 && qAbs(ObstacleCoordinates.y() - 20) < 3)
-    {
+   // {
          //QMessageBox::information(0,"Finished","Food was picked up...",0);
-    }
-
+   // }
+//}
     return 1;
-
 }
-Dynamic_Obstacle::Dynamic_Obstacle()
-{
+Dynamic_Obstacle::Dynamic_Obstacle(){
     direction = 1;
 }

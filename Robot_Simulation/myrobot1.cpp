@@ -313,6 +313,8 @@ int MyRobot1::ProcessStep()
     return 0;
 }
 
+void Robot1::addDetectedObstacles(Detected)
+
 //void MyRobot1::Message()
 //{
 
