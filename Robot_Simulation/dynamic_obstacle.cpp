@@ -48,17 +48,17 @@ int Dynamic_Obstacle::move_()
 {
     FindObs();
 
-    //double degree;
-// //    if (ObstacleCoordinates.y() >= 11)
-// //   {
-// //       degree = 0;
-// //   }
-    //double x_ = qCos(qDegreesToRadians(degree));
-    //double y_ = qSin(qDegreesToRadians(degree));
+    double degree;
+ //    if (ObstacleCoordinates.y() >= 11)
+ //   {
+ //       degree = 0;
+ //   }
+    double x_ = qCos(qDegreesToRadians(degree));
+    double y_ = qSin(qDegreesToRadians(degree));
 
     QPointF newObstacleCoordinate;
-    //newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
-    //newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
+    newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
+    newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
 
     // ///////////////////////////////////////////////////////////////////////
 
@@ -101,10 +101,10 @@ int Dynamic_Obstacle::move_()
         int tempx = newObstacleCoordinate.x();
         int tempy = newObstacleCoordinate.y();
 
-        //if(check if point is outside of map){
-//
-  //      }
-        if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
+        if(tempx < 0 || tempy < 0 || tempy > Environment->size() || tempx > Environment->at(tempy).size() ){
+            continue;
+            }
+        else if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
             continue;
             }
         else{
@@ -115,11 +115,48 @@ int Dynamic_Obstacle::move_()
         }
         }
 
-        else{
-
-
-
+    else{
+        bool break = false;
+        QVector<int> val;
+        QList<float> p;
+        QList<float> s;
+          const int x = 1;
+        for(int i=0; i <= matrix_size - 1; i++){
+            p.append(Mov(obs,i));
             }
+
+        s = p;
+        qSort(s.begin(), s.end(),qGreater<qreal>());
+
+        for(int j=0; j<= matrix_size - 1; j++){
+            bool move = false;
+            float max = s.at(j);
+            int count = s.count(max);
+            if(count > 1){
+                for(int l =1; l <= count; l++){
+                    //val = p.indexOf(max,l);
+                    //if(no walls){
+                    //  move = true;
+                    //  break;
+                    //  }
+                    }
+                }
+            else{
+                    //val = p.indexOf(max);
+                    //if(no walls){
+                    //  move = true;
+                    //  }
+                    }
+
+            if(move == true){
+                break;
+                }
+            }
+
+        return val;
+
+
+    }
 
 
     // ///////////////////////////////////////////////////////////////////////

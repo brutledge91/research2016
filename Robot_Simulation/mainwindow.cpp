@@ -28,7 +28,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked()//start button
 {
     for(int str = 0; str <  MyRobot.size(); str++)
     {

@@ -3,6 +3,8 @@
 
 #include <QtCore>
 #include <QGenericMatrix>
+#include <QVector>
+#include <QtMath>
 #include "constants.h"
 #include "QList.h"
 
