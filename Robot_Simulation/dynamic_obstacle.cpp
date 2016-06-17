@@ -1,5 +1,8 @@
 #include "dynamic_obstacle.h"
+#include <random>
+#include "constants.h"
 
+bool move = false;
 
 int Dynamic_Obstacle::TransferFunction()
 {
@@ -45,18 +48,81 @@ int Dynamic_Obstacle::move_()
 {
     FindObs();
 
-    double degree;
-    //if (ObstacleCoordinates.y() >= 11)
-    {
-        //degree = 0;
-    }
-    double x_ = qCos(qDegreesToRadians(degree));
-    double y_ = qSin(qDegreesToRadians(degree));
+    //double degree;
+// //    if (ObstacleCoordinates.y() >= 11)
+// //   {
+// //       degree = 0;
+// //   }
+    //double x_ = qCos(qDegreesToRadians(degree));
+    //double y_ = qSin(qDegreesToRadians(degree));
 
-    QPointF newObstacleCoordinate ;
-    newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
-    newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
+    QPointF newObstacleCoordinate;
+    //newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
+    //newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
 
+    // ///////////////////////////////////////////////////////////////////////
+
+    if(move == false){
+    while(true){
+        int min = 0;
+        int max = matrix_size;
+        std::random_device seed;
+        std::mt19937 generator(seed());
+        std::uniform_int_distribution<int> dist(min, max);
+        int init_mov = dist(generator);
+
+        const int a = 0;//left
+        const int b = 1;//right
+        const int c = 2;//forward
+        const int d = 3;//backward
+      //constexpr int e = 4;//no movement
+
+        switch(init_mov){
+            case a:
+                newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
+                newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                break;
+            case b:
+                newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
+                newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                break;
+            case c:
+                newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
+                break;
+            case d:
+                newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
+                break;
+            default:
+                newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                newObstacleCoordinate.setY(ObstacleCoordinates.y());
+            }
+        int tempx = newObstacleCoordinate.x();
+        int tempy = newObstacleCoordinate.y();
+
+        //if(check if point is outside of map){
+//
+  //      }
+        if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
+            continue;
+            }
+        else{
+            move = true;
+            break;
+            }
+
+        }
+        }
+
+        else{
+
+
+
+            }
+
+
+    // ///////////////////////////////////////////////////////////////////////
     (*Environment)[ObstacleCoordinates.y()][ObstacleCoordinates.x()] = util1.RemoveDO(this->Environment->at(ObstacleCoordinates.y()).at(ObstacleCoordinates.x()),this->Dynamic_Obstacle_ID);
     QString l = util1.AddDO(this->Environment->at(newObstacleCoordinate.y()).at(newObstacleCoordinate.x()),this->Dynamic_Obstacle_ID);
     (*Environment)[newObstacleCoordinate.y()][newObstacleCoordinate.x()] = l;

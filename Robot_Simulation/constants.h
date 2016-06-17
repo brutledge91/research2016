@@ -18,7 +18,7 @@ const int matrix_size = 4;
 //movement, left, right, forward, backward
 const QGenericMatrix<matrix_size,matrix_size,double> ObsMov(new double[16]{0.1,0.3,0.5,0.1,0.2,0.3,0.5,0,0.1,0.1,0.3,0.5,0.2,0.2,0.3,0.3});
 //speed, fast, normal, slow, none
-const QGenericMatrix<3,3,double> ObsSpd(new double[16]{0.1,0.3,0.5,0.1,0.2,0.3,0.5,0,0.1,0.1,0.3,0.5,0.2,0.2,0.3,0.3});
-const double step = 20;
+//const QGenericMatrix<3,3,double> ObsSpd(new double[16]{0.1,0.3,0.5,0.1,0.2,0.3,0.5,0,0.1,0.1,0.3,0.5,0.2,0.2,0.3,0.3});
+const double step = 1;
 
 #endif // CONSTANTS_H
