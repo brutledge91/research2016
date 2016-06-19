@@ -1,6 +1,4 @@
 #include "dynamic_obstacle.h"
-#include <random>
-#include "constants.h"
 
 
 
@@ -21,7 +19,6 @@ void Dynamic_Obstacle::FindObs()
 {
     int gridsize = this->Environment->size();
     if (gridsize < 1) return;
-    //QMessageBox::information(0, QString::number(gridsize),QString::number(gridsize),0);
     for (int i = 0 ; i < gridsize; i++)
     {
         for (int j = 0; j < gridsize; j++)
@@ -30,7 +27,7 @@ void Dynamic_Obstacle::FindObs()
             {
                 this->ObstacleCoordinates.setX(i);
                 this->ObstacleCoordinates.setY(j);
-                //QMessageBox::information(0, QString::number(ObstacleCoordinates.x()),QString::number(ObstacleCoordinates.y()),0);
+
             }
         }
     }
@@ -47,7 +44,7 @@ int Dynamic_Obstacle::ProcessStep()
 }
 int Dynamic_Obstacle::move_(){
     FindObs();
-//    bool move = false;
+
 // //  double degree;
 // //    if (ObstacleCoordinates.y() >= 11)
 // //   {
@@ -60,137 +57,123 @@ int Dynamic_Obstacle::move_(){
 //    //newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
 //   // newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
 
-//    // //////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////
 
-//    const int a = 0;//left
-//    const int b = 1;//right
-//    const int c = 2;//forward
-//    const int d = 3;//backward
-//    int init_mov;
-//    if(move == false){
-//    while(true){
-//        int min = 0;
-//        int max = matrix_size;
-//        std::random_device seed;
-//        std::mt19937 generator(seed());
-//        std::uniform_int_distribution<int> dist(min, max);
-//        int init_mov = dist(generator);
+    const int a = 0;//left
+    const int b = 1;//right
+    const int c = 2;//forward
+    const int d = 3;//backward
+    int init_mov;
+    if(move == false)
+    {
+        while(true)
+        {
+            int min = 0;
+            int max = matrix_size;   // matrix_size is defined in Constants.h
+            std::random_device seed;
+            std::mt19937 generator(seed());
+            std::uniform_int_distribution<int> dist(min, max);
+            init_mov = dist(generator);
+            switch(init_mov)
+            {
+                case a:
+                    newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
+                    newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                    break;
+                case b:
+                    newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
+                    newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                    break;
+                case c:
+                    newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                    newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
+                    break;
+                case d:
+                    newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                    newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
+                    break;
+                default:
+                    newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                    newObstacleCoordinate.setY(ObstacleCoordinates.y());
+            }
+            int tempx = newObstacleCoordinate.x();
+            int tempy = newObstacleCoordinate.y();
 
-//      //constexpr int e = 4;//no movement
+            if( tempy > Environment->size())
+            {
+                continue;
+            }
+            else
+            {
+                if ( tempx < 0 || tempy < 0 || tempx > Environment->at(tempy).size())
+                    continue;
+            }
+            if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
+                continue;
+            }
+            else
+            {
+                move = true;
+                break;
+            }
 
-//        switch(init_mov){
-//            case a:
-//                newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
-//                newObstacleCoordinate.setY(ObstacleCoordinates.y());
-//                break;
-//            case b:
-//                newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
-//                newObstacleCoordinate.setY(ObstacleCoordinates.y());
-//                break;
-//            case c:
-//                newObstacleCoordinate.setX(ObstacleCoordinates.x());
-//                newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
-//                break;
-//            case d:
-//                newObstacleCoordinate.setX(ObstacleCoordinates.x());
-//                newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
-//                break;
-//            default:
-//                newObstacleCoordinate.setX(ObstacleCoordinates.x());
-//                newObstacleCoordinate.setY(ObstacleCoordinates.y());
-//            }
-//        int tempx = newObstacleCoordinate.x();
-//        int tempy = newObstacleCoordinate.y();
+        }
+    }
+    else
+    {
+        QList<float> p;
+        QList<float> s;
+        int in;
+        for(int i=0; i <= matrix_size - 1; i++)
+        {
+            p.append(OMov(init_mov,i)); //modify to update init_mov to previous move
+        }
+        s = p;
+        qSort(s.begin(), s.end(),qGreater<qreal>());
+        bool x_move = false;
+        for(int j=0; j<= matrix_size - 1; j++)
+        {
+            float max = s.at(j);
+            int count = p.count(max);
+            for(int l =1; l <= count; l++)
+            {
+                in = p.indexOf(max,l);
+                switch(in)
+                {
+                    case a:
+                        newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
+                        newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                        break;
+                    case b:
+                        newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
+                        newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                        break;
+                    case c:
+                        newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                        newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
+                        break;
+                    case d:
+                        newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                        newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
+                        break;
+                    default:
+                        newObstacleCoordinate.setX(ObstacleCoordinates.x());
+                        newObstacleCoordinate.setY(ObstacleCoordinates.y());
+                }
 
-//        if(tempx < 0 || tempy < 0 || tempy > Environment->size() || tempx > Environment->at(tempy).size() ){
-//            continue;
-//            }
-//        else if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
-//            continue;
-//            }
-//        else{
-//            move = true;
-//            //number = &init_mov;
-//            break;
-//            }
-
-//        }
-//        }
-
-//    else{
-
-//        QVector<int> val;
-//        QList<float> p;
-//        QList<float> s;
-//        //const int x = 1;
-//        int in;
-//        for(int i=0; i <= matrix_size - 1; i++){
-//            p.append(OMov(init_mov,i)); //modify to update init_mov to previous move
-//            }
-
-//        s = p;
-//        qSort(s.begin(), s.end(),qGreater<qreal>());
-//        bool x_move;
-//        for(int j=0; j<= matrix_size - 1; j++){
-
-//            float max = s.at(j);
-//            int count = p.count(max);
-////            for (int c = count; c > 0; c--){
-//                for(int l =1; l <= count; l++){
-//                    in = p.indexOf(max,l);
-
-//                    switch(in){
-//                        case a:
-//                            newObstacleCoordinate.setX(ObstacleCoordinates.x() - step);
-//                            newObstacleCoordinate.setY(ObstacleCoordinates.y());
-//                            break;
-//                        case b:
-//                            newObstacleCoordinate.setX(ObstacleCoordinates.x() + step);
-//                            newObstacleCoordinate.setY(ObstacleCoordinates.y());
-//                            break;
-//                        case c:
-//                            newObstacleCoordinate.setX(ObstacleCoordinates.x());
-//                            newObstacleCoordinate.setY(ObstacleCoordinates.y() - step);
-//                            break;
-//                        case d:
-//                            newObstacleCoordinate.setX(ObstacleCoordinates.x());
-//                            newObstacleCoordinate.setY(ObstacleCoordinates.y() + step);
-//                            break;
-//                        default:
-//                            newObstacleCoordinate.setX(ObstacleCoordinates.x());
-//                            newObstacleCoordinate.setY(ObstacleCoordinates.y());
-//                        }
-
-//                    double tempx =  newObstacleCoordinate.x();
-//                    double tempy =  newObstacleCoordinate.y();
-
-//                  //  if(tempx < 0 || tempy < 0 || tempy > Environment->size() || tempx > Environment->at(tempy).size() ){
-//                  //      continue;
-//                   //     }
-//                   // else
-//                        if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
-//                        continue;
-//                        }
-//                    else{
-//                        x_move = true;
-//                        break;
-//                        }
-//                     }
-
-
-
-//                    if(x_move == true){
-//                        break;
-//                    }
-
-
-//                   }
-
-    double xx = 1;
-    double yy = 1;
-    newObstacleCoordinate.setX(ObstacleCoordinates.x() +xx);
-    newObstacleCoordinate.setY(ObstacleCoordinates.y() +yy);
-
+                double tempx =  newObstacleCoordinate.x();
+                double tempy =  newObstacleCoordinate.y();
+                if(!util1.IncludesObstacle(this->Environment->at(tempy).at(tempx)))
+                {
+                    x_move = true;
+                    break;
+                }
+            }
+            if(x_move == true)
+            {
+                break;
+            }
+        }
 
     // ///////////////////////////////////////////////////////////////////////
     (*Environment)[ObstacleCoordinates.y()][ObstacleCoordinates.x()] = util1.RemoveDO(this->Environment->at(ObstacleCoordinates.y()).at(ObstacleCoordinates.x()),this->Dynamic_Obstacle_ID);
@@ -203,7 +186,7 @@ int Dynamic_Obstacle::move_(){
     //if (qAbs(ObstacleCoordinates.x() - 11) < 3 && qAbs(ObstacleCoordinates.y() - 20) < 3)
    // {
          //QMessageBox::information(0,"Finished","Food was picked up...",0);
-   // }
+    }
 //}
     return 1;
 }
