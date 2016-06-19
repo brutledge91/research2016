@@ -65,9 +65,9 @@ public:
     int ProcessStep();
     //
     //void Message();
-    //QVector<Detected_Obstacle> obstacles;
-    //void AddObstacle(Detected_Obstacle);
-    //void RemoveObstacle(int);
+    QVector<Detected_Obstacle> obstacles;
+    void AddObstacle(Detected_Obstacle);
+    void RemoveObstacle(int);
 };
 
 #endif // MYROBOT1_H

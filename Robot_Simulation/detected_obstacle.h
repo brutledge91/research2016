@@ -3,6 +3,8 @@
 
 #include <QtCore>
 #include <QGenericMatrix>
+#include <QVector>
+#include <QtMath>
 #include "constants.h"
 #include "QList.h"
 
@@ -14,10 +16,11 @@ private:
     QPointF est_location;
     QGenericMatrix<matrix_size,matrix_size,double> Mov = ObsMov;
     //QGenericMatrix<matrix_size,matrix_size,float> Spd = ObsSpd;
+    QVector<int> predictions;
 public:
     int getSpeed();
     void setSpeed(int);
-    int getMov(int);
+    QVector<int> getMov(int,int);
     //updateMov();
     //setSpd();
     void setLocation(QPointF);
