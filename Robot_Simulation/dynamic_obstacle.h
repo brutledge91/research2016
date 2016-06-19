@@ -19,12 +19,12 @@ private:
     QString Dynamic_Obstacle_ID;
     Utilities util1;
     int SpeedCounter = 0;
-    int Speed = 140;
+    int Speed = 10;
     int move_();
     int y_coeff = 1;
     int o = 1;
     QGenericMatrix<matrix_size,matrix_size,double> OMov = ObsMov;
-
+    QPointF newObstacleCoordinate;
 public:
     void SetGridInformation(QVector<QVector <QString> >* env_grid);
     void SetObsID(int);
