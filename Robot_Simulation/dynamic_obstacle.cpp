@@ -128,6 +128,7 @@ int Dynamic_Obstacle::move_(){
         {
             p.append(OMov(init_mov,i)); //modify to update init_mov to previous move
         }
+        QMessageBox::information(0,"p Updated","P Updated",0);
         s = p;
         qSort(s.begin(), s.end(),qGreater<qreal>());
         bool x_move = false;
