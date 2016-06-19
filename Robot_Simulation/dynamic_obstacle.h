@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "utilities.h"
 #include "constants.h"
+#include <random>
 
 class Dynamic_Obstacle
 {
@@ -15,7 +16,7 @@ private:
     QPointF ObstacleCoordinates;
     int direction;
     void FindObs();
-
+    bool move = false;
     QString Dynamic_Obstacle_ID;
     Utilities util1;
     int SpeedCounter = 0;
