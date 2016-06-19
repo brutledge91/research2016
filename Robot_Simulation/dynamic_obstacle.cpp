@@ -61,8 +61,8 @@ int Dynamic_Obstacle::move_(){
 
     const int a = 0;//left
     const int b = 1;//right
-    const int c = 2;//forward
-    const int d = 3;//backward
+    const int c = 2;//Up
+    const int d = 3;//Down
     int init_mov;
     if(move == false)
     {
@@ -99,13 +99,13 @@ int Dynamic_Obstacle::move_(){
             int tempx = newObstacleCoordinate.x();
             int tempy = newObstacleCoordinate.y();
 
-            if( tempy > Environment->size())
+            if(  tempx < 0 || tempy < 0 || tempy > Environment->size())
             {
                 continue;
             }
             else
             {
-                if ( tempx < 0 || tempy < 0 || tempx > Environment->at(tempy).size())
+                if (  tempx > Environment->at(tempy).size())
                     continue;
             }
             if(util1.IncludesObstacle(this->Environment->at(tempy).at(tempx))){
