@@ -41,7 +41,7 @@ void MainWindow::on_pushButton_clicked()//start button
 void MainWindow::new_clock()
 {
     int numq = MyRobot.size();
-    MyRobot[0].ProcessStep();
+    //MyRobot[0].ProcessStep();
     for (int ij = 0; ij < MyRobot.size(); ij++)
     {
         if (MyRobot[ij].ProcessStep())

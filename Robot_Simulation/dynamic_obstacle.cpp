@@ -21,15 +21,16 @@ void Dynamic_Obstacle::FindObs()
 {
     int gridsize = this->Environment->size();
     if (gridsize < 1) return;
-
+    //QMessageBox::information(0, QString::number(gridsize),QString::number(gridsize),0);
     for (int i = 0 ; i < gridsize; i++)
     {
         for (int j = 0; j < gridsize; j++)
         {
             if (util1.IncludesDO(Environment->at(j).at(i),this->Dynamic_Obstacle_ID))
             {
-                ObstacleCoordinates.setX(i);
-                ObstacleCoordinates.setY(j);
+                this->ObstacleCoordinates.setX(i);
+                this->ObstacleCoordinates.setY(j);
+                //QMessageBox::information(0, QString::number(ObstacleCoordinates.x()),QString::number(ObstacleCoordinates.y()),0);
             }
         }
     }
@@ -45,7 +46,7 @@ int Dynamic_Obstacle::ProcessStep()
     return 0;
 }
 int Dynamic_Obstacle::move_(){
-//    FindObs();
+    FindObs();
 //    bool move = false;
 // //  double degree;
 // //    if (ObstacleCoordinates.y() >= 11)
@@ -55,7 +56,7 @@ int Dynamic_Obstacle::move_(){
 //   // double x_ = qCos(qDegreesToRadians(degree));
 //   // double y_ = qSin(qDegreesToRadians(degree));
 
-    QPointF newObstacleCoordinate;
+
 //    //newObstacleCoordinate.setX(ObstacleCoordinates.x() + x_);
 //   // newObstacleCoordinate.setY(ObstacleCoordinates.y() - y_coeff * y_);
 
@@ -185,8 +186,8 @@ int Dynamic_Obstacle::move_(){
 
 //                   }
 
-    double xx = -5;
-    double yy = 5;
+    double xx = 1;
+    double yy = 1;
     newObstacleCoordinate.setX(ObstacleCoordinates.x() +xx);
     newObstacleCoordinate.setY(ObstacleCoordinates.y() +yy);
 
