@@ -1,6 +1,9 @@
 #include "myrobot1.h"
 #include <fstream>
 #include <QString>
+#include <QVector2D>
+#include <cmath>
+#include "detected_obstacle.h"
 
 MyRobot1::MyRobot1()
 {
@@ -312,7 +315,136 @@ int MyRobot1::ProcessStep()
     }
     return 0;
 }
+//\//////////////////////////////////////////////////////////////
+QVector<double> MyRobot1::getProb(Detected_Obstacle, int move, int steps){
+    QVector<double> v;
 
+        for(int z = 0; z<= num_states - 1; z++){
+            v.insert(z,Mov(move,z));
+        }
+
+        QVector<QVector<double>> temp1;
+
+        temp1.append(v);
+
+        for(int i = 1; i <= steps; i++){
+
+        QVector<QVector<double>> temp2;
+
+            for(int j = 0; j <= temp1.size()-1; j++){
+
+                QVector<double> temp3;
+
+                for(int k = 0; k <= num_states -1; k++){
+
+                    //QVector<QVector<double>> temp4;
+
+                    for(int l = 0; l <= num_states - 1; l++){
+
+                        temp3[l] = temp1[j][l] * Mov(k,l);
+                    }
+
+                    temp2.append(temp3);
+                }
+
+            }
+
+            temp1 = temp2;
+        }
+}
+
+
+
+QVector<QVector<int>> MyRobot1::findPaths(QVector<double> prob){
+    //int stp = 0;
+    int j = 0;
+    int size = prob.size();
+    QVector<QVector<int>> path;
+
+    path.resize(size);
+    for(int r = 0; r< path.size(); r++)
+    {
+        path[r].resize(num_step);
+    }
+
+    int x = 0;
+    int bound = size / pow(num_states,(num_step -1));
+
+    for(int step = 0; step <= num_step; step++){
+
+        for(int index = 0; index <= prob.size() -1; index++){
+
+            path[index][step] = j;
+
+            if(x == bound -1){
+                if(j == num_states){
+                    j = 0;
+                }
+                else{
+                    j++;
+                    x = 0;
+                }
+            }
+            else{
+                x++;
+            }
+            if(j == num_states){
+                j = 0;
+            }
+        }
+
+    }
+    return path;
+}
+
+QVector<QPointF> MyRobot1::findLocations(QVector<QVector<int>> qpath,QPointF location){
+    //moves:
+    const int a = 0;//left
+    const int b = 1;//right
+    const int c = 2;//forward
+    const int d = 3;//backward
+    //constexpr int e = 4;//no movement
+    int state = 0;
+    int size = qpath.size();
+    QVector<QPointF> result;
+
+    result.resize(size);
+
+for(int i = 0; i <= size; i++){
+
+    QPointF newLocation = location;
+
+    for(int j = 0; j <= num_step - 1; j++){
+
+        state = qpath[i][j];
+
+        switch(state){
+        case a:
+            newLocation.setX(newLocation.x() - step);
+            newLocation.setY(newLocation.y());
+            break;
+        case b:
+            newLocation.setX(newLocation.x() + step);
+            newLocation.setY(newLocation.y());
+            break;
+        case c:
+            newLocation.setX(newLocation.x());
+            newLocation.setY(newLocation.y() - step);
+            break;
+        case d:
+            newLocation.setX(newLocation.x());
+            newLocation.setY(newLocation.y() + step);
+            break;
+        default:
+            newLocation.setX(newLocation.x());
+            newLocation.setY(newLocation.y() + step);
+    }
+   }
+       result[i] = newLocation;
+  }
+return result;
+
+}
 //void Robot1::addDetectedObstacles(Detected)
 
 //void MyRobot1::Message()

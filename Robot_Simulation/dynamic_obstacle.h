@@ -24,7 +24,7 @@ private:
     int move_();
     int y_coeff = 1;
     int o = 1;
-    QGenericMatrix<matrix_size,matrix_size,double> OMov = ObsMov;
+    QGenericMatrix<num_states,num_states,double> OMov = ObsMov;
     QPointF newObstacleCoordinate;
 public:
     void SetGridInformation(QVector<QVector <QString> >* env_grid);

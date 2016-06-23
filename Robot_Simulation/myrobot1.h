@@ -7,6 +7,7 @@
 #include <QtMath>
 #include "utilities.h"
 #include "detected_obstacle.h"
+#include "constants.h"
 
 class MyRobot1
 {
@@ -63,11 +64,20 @@ public:
     double GetDistancetoTarget();
     void InitializeRobot();
     int ProcessStep();
-    //
+
     //void Message();
     QVector<Detected_Obstacle> obstacles;
     void AddObstacle(Detected_Obstacle);
     void RemoveObstacle(int);
+
+    //\///////////////////////////
+    QVector<double> getProb(Detected_Obstacle,int,int);
+    QVector<QVector<int>> findPaths(QVector<double>);
+    QVector<QPointF> findLocations(QVector<QVector<int>>, QPointF);
+    //\///////////////////////////
+    QString out;
+    QVector<QString> in;
+    QGenericMatrix<num_states,num_states,double> Mov = ObsMov;
 };
 
 #endif // MYROBOT1_H

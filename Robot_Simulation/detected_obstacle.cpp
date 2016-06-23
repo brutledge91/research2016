@@ -15,14 +15,14 @@ QVector<int> Detected_Obstacle::getMov(int obs, int num_step){
 //    QList<float> p;
 //    QList<float> s;
 //      const int x = 1;
-//    for(int i=0; i <= matrix_size - 1; i++){
+//    for(int i=0; i <= num_states - 1; i++){
 //        p.append(Mov(obs,i));
 //        }
 
 //    s = p;
 //    qSort(s.begin(), s.end(),qGreater<qreal>());
 
-//    for(int j=0; j<= matrix_size - 1; j++){
+//    for(int j=0; j<= num_states - 1; j++){
 //        bool move = false;
 //        float max = s.at(j);
 //        int count = s.count(max);
@@ -51,13 +51,13 @@ QVector<int> Detected_Obstacle::getMov(int obs, int num_step){
 
     QVector<int> result;
     QVector<double> temp;
-        for(int z = 0; z<= matrix_size - 1; z++){
+        for(int z = 0; z<= num_states - 1; z++){
             temp.insert(z,Mov(z,obs));
         }
-    QGenericMatrix<matrix_size,matrix_size,double> temp2 = Mov;
+    QGenericMatrix<num_states,num_states,double> temp2 = Mov;
 
-    for(int i = 0; i <= matrix_size - 1; i++){
-        for(int j = 0; j<= matrix_size - 1; j++){
+    for(int i = 0; i <= num_states - 1; i++){
+        for(int j = 0; j<= num_states - 1; j++){
             temp2(i,j) = temp2(i,j)*temp.at(j);
         }
     }
@@ -65,8 +65,8 @@ QVector<int> Detected_Obstacle::getMov(int obs, int num_step){
     int index_2;
     double max;
 
-    for(int l = 0; l <= matrix_size - 1; l++){
-        for(int k = 0; k<= matrix_size - 1; k++){
+    for(int l = 0; l <= num_states - 1; l++){
+        for(int k = 0; k<= num_states - 1; k++){
             if(temp2(l,k) > max){
                 max = temp2(l,k);
                 index_1 = l;

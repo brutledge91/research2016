@@ -69,11 +69,12 @@ int Dynamic_Obstacle::move_(){
         while(true)
         {
             int min = 0;
-            int max = matrix_size;   // matrix_size is defined in Constants.h
+            int max = num_states;   // num_states is defined in Constants.h
             std::random_device seed;
             std::mt19937 generator(seed());
             std::uniform_int_distribution<int> dist(min, max);
             init_mov = dist(generator);
+            QMessageBox::information(0,QString::number(init_mov),0,0);
             switch(init_mov)
             {
                 case a:
@@ -124,14 +125,14 @@ int Dynamic_Obstacle::move_(){
         QList<float> p;
         QList<float> s;
         int in;
-        for(int i=0; i <= matrix_size - 1; i++)
+        for(int i=0; i <= num_states - 1; i++)
         {
             p.append(OMov(init_mov,i)); //modify to update init_mov to previous move
         }
         s = p;
         qSort(s.begin(), s.end(),qGreater<qreal>());
         bool x_move = false;
-        for(int j=0; j<= matrix_size - 1; j++)
+        for(int j=0; j<= num_states - 1; j++)
         {
             float max = s.at(j);
             int count = p.count(max);

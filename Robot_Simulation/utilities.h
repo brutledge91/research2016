@@ -30,6 +30,8 @@ public:
     QString RemoveDO(QString,QString);
     QString InitializeDO(QString,QString);
 
+
+
 private :
 
 };

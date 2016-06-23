@@ -14,8 +14,8 @@ private:
     int speed = 0;
     QPointF location;
     QPointF est_location;
-    QGenericMatrix<matrix_size,matrix_size,double> Mov = ObsMov;
-    //QGenericMatrix<matrix_size,matrix_size,float> Spd = ObsSpd;
+    QGenericMatrix<num_states,num_states,double> Mov = ObsMov;
+    //QGenericMatrix<num_states,num_states,float> Spd = ObsSpd;
     QVector<int> predictions;
 public:
     int getSpeed();
@@ -25,6 +25,7 @@ public:
     //setSpd();
     void setLocation(QPointF);
     QPointF setEstLocation(QPointF,int);
+    //QGenericMatrix<num_states,num_states,double> GetMarkohv();
 
     Detected_Obstacle();
 };
