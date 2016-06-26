@@ -26,6 +26,7 @@ private:
     int o = 1;
     QGenericMatrix<matrix_size,matrix_size,double> OMov = ObsMov;
     QPointF newObstacleCoordinate;
+
 public:
     void SetGridInformation(QVector<QVector <QString> >* env_grid);
     void SetObsID(int);
