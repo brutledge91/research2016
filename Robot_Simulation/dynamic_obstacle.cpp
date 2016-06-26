@@ -74,7 +74,6 @@ int Dynamic_Obstacle::move_(){
             std::mt19937 generator(seed());
             std::uniform_int_distribution<int> dist(min, max);
             init_mov = dist(generator);
-            QMessageBox::information(0,QString::number(init_mov),0,0);
             switch(init_mov)
             {
                 case a:

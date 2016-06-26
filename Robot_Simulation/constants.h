@@ -14,7 +14,7 @@ const QString Robot_Radar_Color = "#F0DDEC";
 const QString Robot_Pixel_Color = "#584FFF";
 
 // HMM currently 4x4
-const int num_states = 4;
+const int num_states = 4; //Left,Right, Forward, Backward
 //movement, left, right, forward, backward
 const QGenericMatrix<num_states,num_states,double> ObsMov(new double[16]{0.1,0.3,0.5,0.1,0.2,0.3,0.5,0,0.1,0.1,0.3,0.5,0.2,0.2,0.3,0.3});
 //speed, fast, normal, slow, none
@@ -23,5 +23,7 @@ const QGenericMatrix<num_states,num_states,double> ObsMov(new double[16]{0.1,0.3
 const int num_step = 3;
 // How large a step is
 const double step = 1;
+
+
 
 #endif // CONSTANTS_H

@@ -7,7 +7,7 @@
 
 MyRobot1::MyRobot1()
 {
-
+    this->Mov = ObsMov;
 }
 void MyRobot1::SetRobotID(int ID_)
 {
@@ -316,12 +316,12 @@ int MyRobot1::ProcessStep()
     return 0;
 }
 //\//////////////////////////////////////////////////////////////
-QVector<double> MyRobot1::getProb(Detected_Obstacle, int move, int steps){
+QVector<double> MyRobot1::getProb(Detected_Obstacle obstacle, int move, int steps){
     QVector<double> v;
     QVector<double> result;
 
         for(int z = 0; z<= num_states - 1; z++){
-            v.insert(z,Mov(move,z));
+            v.insert(z,Mov(move,z)); //Mov is in the header
         }
 
         QVector<QVector<double>> temp1;
@@ -330,33 +330,25 @@ QVector<double> MyRobot1::getProb(Detected_Obstacle, int move, int steps){
 
         for(int i = 1; i <= steps; i++){
 
-        QVector<QVector<double>> temp2;
+            QVector<QVector<double>> temp2;
 
             for(int j = 0; j <= temp1.size()-1; j++){
 
                 QVector<double> temp3;
 
                 for(int k = 0; k <= num_states -1; k++){
-
-                    //QVector<QVector<double>> temp4;
-
                     for(int l = 0; l <= num_states - 1; l++){
-
                         temp3[l] = temp1[j][l] * Mov(k,l);
                     }
-
                     temp2.append(temp3);
                 }
-
             }
-
             temp1 = temp2;
         }
 
-        for(int h = 0; h <= temp1.size() -1; h++){
-            result.append(temp1.at(h));
+        for(auto& h : temp1){
+            result.append(h);
         }
-
         return result;
 }
 
@@ -405,13 +397,12 @@ QVector<QVector<int>> MyRobot1::findPaths(QVector<double> prob){
 }
 
 QVector<QPointF> MyRobot1::findLocations(QVector<QVector<int>> qpath,QPointF location){
+
+
+
     //moves:
-    const int a = 0;//left
-    const int b = 1;//right
-    const int c = 2;//forward
-    const int d = 3;//backward
+    int state;
     //constexpr int e = 4;//no movement
-    int state = 0;
     int size = qpath.size();
     QVector<QPointF> result;
 
@@ -426,19 +417,19 @@ for(int i = 0; i <= size; i++){
         state = qpath[i][j];
 
         switch(state){
-        case a:
+        case Direction_::Left:
             newLocation.setX(newLocation.x() - step);
             newLocation.setY(newLocation.y());
             break;
-        case b:
+        case Direction_::Right:
             newLocation.setX(newLocation.x() + step);
             newLocation.setY(newLocation.y());
             break;
-        case c:
+        case Direction_::Forward:
             newLocation.setX(newLocation.x());
             newLocation.setY(newLocation.y() - step);
             break;
-        case d:
+        case Direction_::Backward:
             newLocation.setX(newLocation.x());
             newLocation.setY(newLocation.y() + step);
             break;

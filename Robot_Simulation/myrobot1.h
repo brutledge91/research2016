@@ -14,6 +14,8 @@ class MyRobot1
 private:
     QVector<QVector <QString> > *Environment;
 
+
+
     //Functions
     void FindRobot();
     void FindTarget();
@@ -24,7 +26,7 @@ private:
     double bestangle();
     int move_();
     QPointF currentTargetpoint();
-
+    enum Direction_ {Left = 0, Right = 1, Forward= 2, Backward =3 };
 
     //Variables
     int vp = 1;
@@ -46,7 +48,7 @@ private:
     int Radar_Range = 5;
     int Speed = 10;
     //QString comtxt = "[AppStartupDir]/Maps/COM/com.txt";
-
+    QGenericMatrix<num_states,num_states,double> Mov ;
 
 public:
     MyRobot1();
@@ -77,7 +79,7 @@ public:
     //\///////////////////////////
     QString out;
     QVector<QString> in;
-    QGenericMatrix<num_states,num_states,double> Mov = ObsMov;
+
 };
 
 #endif // MYROBOT1_H
