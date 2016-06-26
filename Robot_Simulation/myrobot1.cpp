@@ -369,7 +369,7 @@ QVector<QVector<int>> MyRobot1::findPaths(QVector<double> prob){
     int x = 0;
     int bound = size / pow(num_states,(num_step -1));
 
-    for(int step = 0; step <= num_step; step++){
+    for(int step = 1; step <= num_step; step++){
 
         for(int index = 0; index <= prob.size() -1; index++){
 

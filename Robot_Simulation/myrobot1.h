@@ -75,6 +75,7 @@ public:
     QVector<double> getProb(Detected_Obstacle,int,int);
     QVector<QVector<int>> findPaths(QVector<double>);
     QVector<QPointF> findLocations(QVector<QVector<int>>, QPointF);
+    QVector<QPointF> trimLocations(QVector<QPointF>);
     //\///////////////////////////
     QString out;
     QVector<QString> in;
