@@ -318,6 +318,7 @@ int MyRobot1::ProcessStep()
 //\//////////////////////////////////////////////////////////////
 QVector<double> MyRobot1::getProb(Detected_Obstacle, int move, int steps){
     QVector<double> v;
+    QVector<double> result;
 
         for(int z = 0; z<= num_states - 1; z++){
             v.insert(z,Mov(move,z));
@@ -351,6 +352,12 @@ QVector<double> MyRobot1::getProb(Detected_Obstacle, int move, int steps){
 
             temp1 = temp2;
         }
+
+        for(int h = 0; h <= temp1.size() -1; h++){
+            result.append(temp1.at(h));
+        }
+
+        return result;
 }
 
 
