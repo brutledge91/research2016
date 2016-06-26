@@ -26,8 +26,7 @@ private:
     double bestangle();
     int move_();
     QPointF currentTargetpoint();
-    enum Direction_ {Left = 0, Right = 1, Forward= 2, Backward =3 };
-
+    enum Direction_ {Left = 0, Right = 1, Forward= 2, Backward =3 }; // Directions
     //Variables
     int vp = 1;
     QString RobotID;
